@@ -1,5 +1,5 @@
 ---
-title: "The \"Getting to Know Unix\" Problem Set"
+title: "The Getting to Know Unix Problem Set"
 output:
   html_notebook:
     number_sections: yes
@@ -82,7 +82,7 @@ ls -l
 ```
 
 Note that some of the file names might look garbled in the Rmarkdown output.  This
-is a consequency of RMarkdown/html not playing well with the shell's way of
+is a consequence of RMarkdown/html not playing well with the shell's way of
 colorizing `ls` output.
 
 # There is a directory called `.git` in here that didn't get listed. List everything again, but make sure `.git` is in the output
@@ -495,7 +495,9 @@ cat count_files.sh
 
 ```{bash}
 
-chmod 664 ./count_files.sh
+#Apparent
+
+runas chmod -R 664 ./count_files.sh
 
 ./count_files.sh
 ```
@@ -503,7 +505,7 @@ chmod 664 ./count_files.sh
 Aha! You should have gotten a permission denied error.  99% of the time that occurs because
 the file is not user-executable.
 
-**I'm not sure why chmod isn't working...** 
+**I'm not sure why chmod isn't working. I thought it had something to do with Dropbox, but I moved the project into a directory on my desktop and the problem continues.** 
 
 # List (long) `count_files.sh` to see what the permissions are, and then add execute (`x`) permissions to users and groups with the "add-or-subtract permissions syntax" of `chmod`, then long list it again
 
@@ -511,6 +513,11 @@ the file is not user-executable.
 
 ls -l count_files.sh
 
+#currently I have read and write permissions as a user.
+#to make it executable for users and groups
+chmod ug+x ./count_files.sh
+
+ls -l count_files.sh
 
 ```
 
@@ -521,4 +528,17 @@ ls -l count_files.sh
 
 ```{bash}
 
+#heres what I think the codes should be to get the desired outcomes. Chmod still won't change the permissions, and apparently this is a reoccuring issue on Stack exchange but I haven't been able to find a solution that works. supposedly runas should work for windows, but not for me.
+
+chmod 0774 ./silly/FILE-rwxrwxr--
+
+chmod 0740 ./silly/FILE-rwxr-----
+
+chmod 0664 ./silly/FILE-rw-rw-r--
+
+chmod 0664 ./silly/FILE-rw-rw-r--
+
+chmod 0771 ./silly/DIRdrwxrwxr-x/
+
+ls -l silly
 ```
